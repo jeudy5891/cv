@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeudy Paniagua | GIS · Diseño Web · Geomarketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080c14;
+            --bg-2: #0d1426;
+            --primary: #00d4ff;
+            --primary-glow: rgba(0, 212, 255, 0.12);
+            --secondary: #7c3aed;
+            --accent: #06d6a0;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --card: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(8, 12, 20, 0.85);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            height: 38px;
+            width: auto;
+        }
+
+        .nav-logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-cta {
+            padding: 0.5rem 1.25rem !important;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff !important;
+            border-radius: 50px;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            transition: opacity 0.3s, transform 0.3s !important;
+        }
+
+        .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 5rem;
+            position: relative;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.08), transparent 65%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: breathe 6s ease-in-out infinite;
+        }
+
+        .hero-glow-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.06), transparent 65%);
+            top: 60%;
+            left: 60%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: breathe 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem 1.1rem;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 214, 160, 0.4); }
+            50% { opacity: 0.8; transform: scale(1.3); box-shadow: 0 0 0 5px rgba(6, 214, 160, 0); }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 4.8rem);
+            font-weight: 800;
+            line-height: 1.08;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--muted);
+            max-width: 580px;
+            margin: 0 auto 2.25rem;
+            line-height: 1.75;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .tag {
+            padding: 0.35rem 0.9rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .tag:hover { border-color: rgba(0, 212, 255, 0.3); color: var(--primary); }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 45px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2.1rem;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ── STATS ── */
+        .stats-bar {
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+            line-height: 1.4;
+        }
+
+        /* ── SECTIONS ── */
+        .section-wrapper { max-width: 1160px; margin: 0 auto; padding: 5.5rem 2rem; }
+        .section-wrapper-alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            color: var(--muted);
+            font-size: 1.05rem;
+            max-width: 560px;
+            line-height: 1.75;
+            margin-bottom: 3rem;
+        }
+
+        /* ── SERVICES ── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all 0.35s;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(124, 58, 237, 0.04));
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+
+        .service-card:hover {
+            border-color: rgba(0, 212, 255, 0.28);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card:hover::after { opacity: 1; }
+
+        .service-icon {
+            font-size: 2.25rem;
+            margin-bottom: 1.1rem;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 1.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-tag {
+            padding: 0.22rem 0.65rem;
+            background: rgba(0, 212, 255, 0.07);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 50px;
+            font-size: 0.72rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* ── ABOUT ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: #94a3b8;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .about-text em { color: var(--text); font-style: italic; }
+
+        .skills-list { display: flex; flex-direction: column; gap: 1.2rem; }
+
+        .skill-item { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .skill-pct { color: var(--primary); font-weight: 600; }
+
+        .skill-bar {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            max-width: 800px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--primary), rgba(0, 212, 255, 0.05));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.75rem;
+            padding-left: 1.75rem;
+        }
+
+        .timeline-item:last-child { padding-bottom: 0; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.37rem;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+        }
+
+        .timeline-date {
+            font-size: 0.78rem;
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-company {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-role {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .timeline-desc {
+            color: var(--muted);
+            font-size: 0.87rem;
+            line-height: 1.7;
+        }
+
+        /* ── PROFILE PHOTO ── */
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(0, 212, 255, 0.35);
+            box-shadow: 0 0 35px rgba(0, 212, 255, 0.18);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        /* ── CERTS ── */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .cert-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.3s;
+        }
+
+        .cert-card:hover { border-color: rgba(6, 214, 160, 0.25); }
+
+        .cert-year {
+            min-width: 42px;
+            height: 42px;
+            background: rgba(6, 214, 160, 0.1);
+            border: 1px solid rgba(6, 214, 160, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .cert-info { flex: 1; }
+        .cert-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; }
+        .cert-org { font-size: 0.75rem; color: var(--muted); }
+
+        /* ── CONTACT ── */
+        .contact-section {
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 5.5rem 2rem;
+        }
+
+        .contact-info { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+
+        .contact-item { display: flex; align-items: center; gap: 1.1rem; }
+
+        .contact-icon {
+            width: 46px;
+            height: 46px;
+            min-width: 46px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .contact-detail { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.1rem; }
+        .contact-value { font-weight: 500; font-size: 0.95rem; }
+
+        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+        .form-success {
+            display: none;
+            padding: 1.25rem;
+            background: rgba(6, 214, 160, 0.1);
+            border: 1px solid rgba(6, 214, 160, 0.3);
+            border-radius: 12px;
+            color: var(--accent);
+            font-weight: 500;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+        label { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+
+        input, textarea, select {
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.3s, background 0.3s;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: rgba(0, 212, 255, 0.45);
+            background: rgba(0, 212, 255, 0.03);
+        }
+
+        input::placeholder, textarea::placeholder { color: #334155; }
+        textarea { resize: vertical; min-height: 120px; }
+
+        select option { background: #0d1426; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        footer a { color: var(--primary); text-decoration: none; }
+
+        /* ── ANIMATIONS ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .services-grid { grid-template-columns: 1fr; }
+            .tools-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+    <a href="#" class="nav-logo">
+        <img src="logo-jpm.png" alt="Jeudy Paniagua Mora">
+        <span class="nav-logo-text">Jeudy Paniagua Mora</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#certificaciones">Certificaciones</a></li>
+        <li><a href="#contacto" class="nav-cta">💬 Contactar</a></li>
+    </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div style="position:relative; overflow:hidden;">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Disponible para proyectos &nbsp;·&nbsp; San José, Costa Rica
+            </div>
+            <h1>
+                Transformo datos en<br>
+                <span class="gradient-text">experiencias digitales</span>
+            </h1>
+            <p class="hero-sub">
+                Lic. en Geografía · 15+ años en SIG · Diseño web, geomarketing, automatización y dashboards para que tu negocio tome mejores decisiones.
+            </p>
+            <div class="hero-tags">
+                <span class="tag">🗺️ Web Maps</span>
+                <span class="tag">📊 Dashboards</span>
+                <span class="tag">⚡ Low Code</span>
+                <span class="tag">🤖 Automatización</span>
+                <span class="tag">📍 Geomarketing</span>
+                <span class="tag">💻 Vibe Coding</span>
+                <span class="tag">🌐 Diseño Web</span>
+            </div>
+            <div class="hero-actions">
+                <a href="#servicios" class="btn-primary">Ver mis servicios</a>
+                <a href="#contacto" class="btn-secondary">Hablemos →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+    <div class="stats-grid">
+        <div class="stat-item fade-up">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Años de<br>experiencia</div>
+        </div>
+        <div class="stat-item fade-up">
+            <div class="stat-number">8+</div>
+            <div class="stat-label">Empresas e<br>instituciones</div>
+        </div>
+        <div class="stat-item fade-up">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Líneas de<br>servicio</div>
+        </div>
+        <div class="stat-item fade-up">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Idiomas<br>(ES · PT · EN)</div>
+        </div>
+    </div>
+</div>
+
+<!-- ── SERVICIOS ── -->
+<div id="servicios">
+    <div class="section-wrapper">
+        <div class="section-label">Servicios</div>
+        <h2>Lo que puedo hacer <span class="gradient-text">por ti</span></h2>
+        <p class="section-desc">Combino experiencia técnica profunda en SIG con herramientas modernas de diseño web, IA y automatización para crear soluciones que realmente funcionan.</p>
+
+        <div class="services-grid">
+
+            <div class="service-card fade-up">
+                <span class="service-icon">🗺️</span>
+                <h3>Web Maps & Geomarketing</h3>
+                <p>Mapas web interactivos y análisis geoespacial para entender tu territorio, clientes y mercado. Visualiza tus datos donde importa: en el mapa.</p>
+                <div class="service-tags">
+                    <span class="service-tag">ArcGIS</span>
+                    <span class="service-tag">Leaflet</span>
+                    <span class="service-tag">Mapbox</span>
+                    <span class="service-tag">QGIS</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-up">
+                <span class="service-icon">📊</span>
+                <h3>Dashboards & Visualización</h3>
+                <p>Paneles de control interactivos que convierten tus datos en insights accionables. Conectados a tus fuentes en tiempo real y listos para presentar.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Power BI</span>
+                    <span class="service-tag">Looker Studio</span>
+                    <span class="service-tag">Plotly</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-up">
+                <span class="service-icon">💻</span>
+                <h3>Diseño Web & Vibe Coding</h3>
+                <p>Landing pages, portfolios y sitios web modernos con diseño que conecta emocionalmente con tu audiencia. Rápidos, responsivos y con propósito claro.</p>
+                <div class="service-tags">
+                    <span class="service-tag">HTML / CSS</span>
+                    <span class="service-tag">React</span>
+                    <span class="service-tag">Webflow</span>
+                    <span class="service-tag">Framer</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-up">
+                <span class="service-icon">⚡</span>
+                <h3>Automatización Low Code</h3>
+                <p>Elimina tareas repetitivas con flujos de trabajo automatizados. Integra tus sistemas sin código complejo y ahorra horas cada semana.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Make</span>
+                    <span class="service-tag">n8n</span>
+                    <span class="service-tag">Power Automate</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-up">
+                <span class="service-icon">🤖</span>
+                <h3>IA Aplicada al Negocio</h3>
+                <p>Integración de inteligencia artificial generativa para potenciar tu flujo de trabajo. Automatiza contenido, análisis y decisiones con herramientas de IA.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Claude</span>
+                    <span class="service-tag">ChatGPT</span>
+                    <span class="service-tag">Cursor</span>
+                    <span class="service-tag">Gemini</span>
+                </div>
+            </div>
+
+            <div class="service-card fade-up">
+                <span class="service-icon">💼</span>
+                <h3>Consultoría SIG & Geoespacial</h3>
+                <p>Asesoría especializada en implementación de sistemas GIS, planificación territorial, análisis espacial y toma de decisiones basada en datos geográficos.</p>
+                <div class="service-tags">
+                    <span class="service-tag">Catastro</span>
+                    <span class="service-tag">Plan. Territorial</span>
+                    <span class="service-tag">Imp. Ambiental</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── SOBRE MÍ ── -->
+<div class="section-wrapper-alt" id="sobre-mi">
+    <div class="section-wrapper" style="padding-top:5.5rem; padding-bottom:5.5rem;">
+        <div class="about-grid">
+            <div class="about-text">
+                <img src="foto-perfil.png" alt="Jeudy Paniagua Mora" class="profile-photo">
+                <div class="section-label">Sobre mí</div>
+                <h2>Analista GIS / <span class="gradient-text">Lic. en Geografía</span></h2>
+                <p>Soy Licenciado en Geografía por la Universidad de Costa Rica y cuento con más de 15 años de experiencia en Sistemas de Información Geográfica (SIG), cartografía y gestión de información geoespacial. Me especializo en análisis espacial, elaboración de cartografía técnica y oficial, control de calidad de datos, automatización de procesos y desarrollo de aplicaciones web orientadas a la visualización y análisis geográfico.</p>
+                <p>He participado en proyectos de catastro, censos, planificación territorial, estudios de impacto ambiental y apoyo a la toma de decisiones para instituciones públicas y empresas nacionales e internacionales. He colaborado con entidades como la CNE, ICE, CCSS y el Ministerio de Hacienda.</p>
+                <p>Complemento mi perfil técnico con conocimientos en diseño web moderno, herramientas de inteligencia artificial y optimización de flujos de trabajo digitales. Me caracterizo por mi capacidad de adaptación, trabajo en equipo, capacitación de personal y orientación a resultados.</p>
+                <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                    <a href="mailto:jeupma@gmail.com" class="btn-primary">✉️ Escribirme</a>
+                    <a href="https://wa.me/50685900612?text=Hola%20Jeudy%2C%20vi%20tu%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20consultarte%20sobre%20tus%20servicios." target="_blank" class="btn-secondary">💬 WhatsApp</a>
+                </div>
+            </div>
+            <div>
+                <div class="skills-list">
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Sistemas de Información Geográfica</span><span class="skill-pct">95%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-w="95"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Análisis Espacial & Cartografía</span><span class="skill-pct">93%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-w="93"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Diseño Web & Vibe Coding</span><span class="skill-pct">85%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Power BI & Dashboards</span><span class="skill-pct">88%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-w="88"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Automatización Low Code</span><span class="skill-pct">82%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-w="82"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>IA Generativa Aplicada</span><span class="skill-pct">84%</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-w="84"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── EXPERIENCIA ── -->
+<div id="experiencia">
+    <div class="section-wrapper">
+        <div class="section-label">Experiencia</div>
+        <h2>Trayectoria <span class="gradient-text">profesional</span></h2>
+        <p class="section-desc">Más de 15 años colaborando con instituciones públicas y empresas privadas en Costa Rica y el exterior.</p>
+
+        <div class="timeline">
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2021 — 2026</div>
+                <div class="timeline-company">Comisión Nacional de Prevención de Riesgos y Atención de Emergencias (CNE)</div>
+                <div class="timeline-role">Profesional en Geografía & Analista SIG</div>
+                <p class="timeline-desc">Desarrollo de sistemas y aplicaciones para la automatización de procesos y análisis de datos, facilitando la toma de decisiones estratégicas durante situaciones de emergencia nacional.</p>
+            </div>
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2016 — 2020</div>
+                <div class="timeline-company">Instituto Costarricense de Electricidad (ICE)</div>
+                <div class="timeline-role">Profesional en Geografía</div>
+                <p class="timeline-desc">Responsable del SIG y elaboración del estudio de paisaje para el Estudio de Impacto Ambiental del proyecto Línea de Transmisión Moín–Rancho Redondo.</p>
+            </div>
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2020</div>
+                <div class="timeline-company">Telespazio Argentina</div>
+                <div class="timeline-role">Analista SIG</div>
+                <p class="timeline-desc">Procesamiento de insumos cartográficos (bases de datos e imágenes ráster) y capacitación de personal en herramientas SIG para el Programa de Regularización de Catastro y Registro.</p>
+            </div>
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2015 — 2016</div>
+                <div class="timeline-company">Consorcio Geovalor</div>
+                <div class="timeline-role">Analista SIG — Plataforma de Valores de Terreno</div>
+                <p class="timeline-desc">Elaboración de mapas de valor para el Ministerio de Hacienda, producción de cartografía oficial y control de calidad de bases de datos.</p>
+            </div>
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2013 — 2014</div>
+                <div class="timeline-company">Instituto Nacional de Estadística y Censo (INEC)</div>
+                <div class="timeline-role">Profesional en Geografía — IV Censo Nacional Agropecuario</div>
+                <p class="timeline-desc">Digitalización y elaboración de cartografía censal, capacitación de personal censista en uso de GPS y aplicaciones móviles.</p>
+            </div>
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2010 — 2012</div>
+                <div class="timeline-company">CCSS · EPYPSA</div>
+                <div class="timeline-role">Profesional en Geografía</div>
+                <p class="timeline-desc">Base de datos espacial de actividad patronal en CCSS. Atlas cartográfico para planes reguladores en la Zona Marítimo-Terrestre del Pacífico y levantamiento catastral de la Milla Fronteriza Norte.</p>
+            </div>
+
+            <div class="timeline-item fade-up">
+                <div class="timeline-date">2007 — 2010</div>
+                <div class="timeline-company">Geotecnologías S.A.</div>
+                <div class="timeline-role">Técnico Catastral</div>
+                <p class="timeline-desc">Digitalización, control de calidad, análisis de planos y homologación de datos para el Programa de Regularización de Catastro–Registro del Registro Nacional.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── CERTIFICACIONES ── -->
+<div id="certificaciones">
+    <div class="section-wrapper">
+        <div class="section-label">Formación continua</div>
+        <h2>Certificaciones <span class="gradient-text">y logros</span></h2>
+        <p class="section-desc">Aprendizaje constante como parte de mi ADN profesional.</p>
+
+        <div class="certs-grid">
+            <div class="cert-card fade-up">
+                <div class="cert-year">2024</div>
+                <div class="cert-info">
+                    <div class="cert-title">Inteligencia Artificial Generativa (IAGEN)</div>
+                    <div class="cert-org">BID — Banco Interamericano de Desarrollo</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2024</div>
+                <div class="cert-info">
+                    <div class="cert-title">Power BI Usuario Final</div>
+                    <div class="cert-org">GBM</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2024</div>
+                <div class="cert-info">
+                    <div class="cert-title">Scrum Foundation Professional</div>
+                    <div class="cert-org">CertiProf</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2024</div>
+                <div class="cert-info">
+                    <div class="cert-title">🎤 Ponente — Conferencia de Usuarios ESRI</div>
+                    <div class="cert-org">ESRI Costa Rica</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2023</div>
+                <div class="cert-info">
+                    <div class="cert-title">Formador de Formadores</div>
+                    <div class="cert-org">INA — Instituto Nacional de Aprendizaje</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2022</div>
+                <div class="cert-info">
+                    <div class="cert-title">🏆 Finalista — Hackathon Copernicus Centroamérica</div>
+                    <div class="cert-org">Programa Copernicus de la UE</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2022</div>
+                <div class="cert-info">
+                    <div class="cert-title">ArcGIS Survey123</div>
+                    <div class="cert-org">ESRI</div>
+                </div>
+            </div>
+            <div class="cert-card fade-up">
+                <div class="cert-year">2020</div>
+                <div class="cert-info">
+                    <div class="cert-title">Análisis Espacial con ArcGIS Pro</div>
+                    <div class="cert-org">Geotecnologías</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CONTACTO ── -->
+<div class="contact-section" id="contacto">
+    <div class="contact-grid">
+        <div>
+            <div class="section-label">Contacto</div>
+            <h2>¿Tienes un proyecto<br><span class="gradient-text">en mente?</span></h2>
+            <p style="color:var(--muted); line-height:1.75; font-size:0.95rem;">Hablemos. Ya sea un mapa web, un dashboard, automatizar tus procesos o construir una web app — me encantaría escucharte.</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <div class="contact-detail">Teléfono / WhatsApp</div>
+                        <div class="contact-value">(506) 8590-0612</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <div class="contact-detail">Email</div>
+                        <div class="contact-value">jeupma@gmail.com</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <div class="contact-detail">Ubicación</div>
+                        <div class="contact-value">San José, Aserrí · Costa Rica</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-success" id="form-success">
+            ✅ ¡Mensaje enviado! Te responderé a la brevedad.
+        </div>
+        <form class="contact-form" id="contact-form"
+              action="https://formspree.io/f/xzdwdgyv"
+              method="POST">
+
+            <!-- Esto hace que Formspree envíe el correo a tu Gmail -->
+            <input type="hidden" name="_replyto" value="jeupma@gmail.com">
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde tu web — Jeudy PM">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input id="name" name="nombre" type="text" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="tu@email.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="service">Servicio de interés</label>
+                <select id="service" name="servicio">
+                    <option value="" disabled selected>Selecciona un servicio…</option>
+                    <option>Web Maps & Geomarketing</option>
+                    <option>Dashboard & Visualización de datos</option>
+                    <option>Diseño Web & Vibe Coding</option>
+                    <option>Automatización Low Code</option>
+                    <option>IA Aplicada al Negocio</option>
+                    <option>Consultoría SIG & Geoespacial</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="msg">Mensaje</label>
+                <textarea id="msg" name="mensaje" placeholder="Cuéntame sobre tu proyecto, necesidades o dudas…" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="border:none; width:100%; justify-content:center; font-size:0.95rem;">
+                Enviar mensaje ✉️
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <p style="margin-bottom:0.4rem; font-weight:500; color:var(--text);">Jeudy Paniagua Mora</p>
+    <p>GIS · Diseño Web · Geomarketing · Automatización · Costa Rica</p>
+    <p style="margin-top:0.75rem;">
+        <a href="mailto:jeupma@gmail.com">jeupma@gmail.com</a>
+        &nbsp;·&nbsp;
+        <a href="https://wa.me/50685900612?text=Hola%20Jeudy%2C%20vi%20tu%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20consultarte%20sobre%20tus%20servicios." target="_blank">(506) 8590-0612</a>
+    </p>
+    <p style="margin-top:1rem; font-size:0.72rem; color:#334155;">© 2025 Jeudy Paniagua Mora. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+    /* ── Scroll fade-in ── */
+    const observer = new IntersectionObserver((entries) => {
+        const groups = {};
+        entries.forEach(entry => {
+            const parent = entry.target.parentElement;
+            if (!groups[parent]) groups[parent] = [];
+            if (entry.isIntersecting) groups[parent].push(entry.target);
+        });
+        Object.values(groups).forEach(group => {
+            group.forEach((el, i) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                    observer.unobserve(el);
+                }, i * 90);
+            });
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    /* ── Skill bars ── */
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.w + '%';
+                });
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    const skillsSection = document.querySelector('.skills-list');
+    if (skillsSection) skillObserver.observe(skillsSection);
+
+    /* ── Active nav ── */
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - 250) current = s.id;
+        });
+        navLinks.forEach(a => {
+            const isActive = a.getAttribute('href') === '#' + current;
+            if (!a.classList.contains('nav-cta')) {
+                a.style.color = isActive ? 'var(--primary)' : '';
+            }
+        });
+    });
+
+    /* ── Form submit via Formspree (AJAX, sin redirección) ── */
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button[type=submit]');
+            const original = btn.innerHTML;
+            btn.textContent = 'Enviando…';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    contactForm.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                } else {
+                    btn.innerHTML = original;
+                    btn.disabled = false;
+                    alert('Hubo un error al enviar. Por favor intenta de nuevo.');
+                }
+            } catch {
+                btn.innerHTML = original;
+                btn.disabled = false;
+                alert('Error de conexión. Por favor intenta de nuevo.');
+            }
+        });
+    }
+
+    /* ── Parallax glow ── */
+    document.addEventListener('mousemove', (e) => {
+        const glow = document.querySelector('.hero-glow');
+        if (!glow) return;
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        glow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    });
+</script>
+</body>
+</html>
