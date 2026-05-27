@@ -666,6 +666,223 @@
 
         select option { background: #0d1426; }
 
+        /* ── PORTFOLIO GALLERY ── */
+        .gallery-outer { overflow: hidden; border-radius: var(--radius); }
+
+        .gallery-track {
+            display: flex;
+            gap: 1rem;
+            transition: transform 0.78s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        /* flip card */
+        .flip-card {
+            flex-shrink: 0;
+            width: calc(33.333% - 0.667rem);
+            height: 430px;
+            perspective: 1100px;
+            cursor: pointer;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%; height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: var(--radius);
+        }
+
+        .flip-card:hover .flip-inner { transform: rotateY(180deg); }
+
+        .flip-front, .flip-back {
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+        }
+
+        /* front */
+        .flip-front { background: var(--bg-2); }
+
+        .flip-front img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .flip-card:hover .flip-front img { transform: scale(1.05); }
+
+        .flip-front-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 1.2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 55%, transparent 100%);
+        }
+
+        .flip-front-badge {
+            display: inline-block;
+            font-size: 0.63rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.18rem 0.55rem;
+            border-radius: 50px;
+            border: 1px solid;
+            margin-bottom: 0.4rem;
+        }
+
+        .flip-front-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.25;
+        }
+
+        .flip-hint {
+            position: absolute;
+            top: 0.8rem; right: 0.8rem;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            transition: all 0.3s;
+        }
+
+        .flip-card:hover .flip-hint {
+            background: rgba(0,212,255,0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* back */
+        .flip-back {
+            background: var(--bg-2);
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            padding: 1.6rem;
+        }
+
+        .flip-back-accent {
+            height: 3px;
+            border-radius: 2px;
+            width: 36px;
+            margin-bottom: 1.1rem;
+        }
+
+        .flip-back-icon { font-size: 1.65rem; margin-bottom: 0.5rem; display: block; }
+
+        .flip-back-badge {
+            display: inline-block;
+            font-size: 0.63rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.18rem 0.55rem;
+            border-radius: 50px;
+            border: 1px solid;
+            margin-bottom: 0.65rem;
+            width: fit-content;
+        }
+
+        .flip-back h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.25;
+            color: var(--text);
+        }
+
+        .flip-back p {
+            font-size: 0.78rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 0.85rem;
+            flex: 1;
+        }
+
+        .flip-back-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .flip-back-tag {
+            padding: 0.18rem 0.5rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.67rem;
+            color: #64748b;
+        }
+
+        .flip-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: gap 0.25s;
+            margin-top: auto;
+        }
+
+        .flip-back-link:hover { gap: 0.7rem; }
+
+        /* controls */
+        .gallery-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(8,12,20,0.9);
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .gallery-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        .gallery-dots { display: flex; gap: 0.45rem; align-items: center; }
+
+        .gallery-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            border: none;
+            background: var(--border);
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.35s;
+        }
+
+        .gallery-dot.active { background: var(--primary); width: 22px; border-radius: 4px; }
+
+        @media (max-width: 768px) {
+            .flip-card { width: calc(80vw - 2rem); height: 380px; }
+        }
+
         /* ── FOOTER ── */
         footer {
             padding: 2.5rem 2rem;
@@ -717,6 +934,7 @@
         <li><a href="#sobre-mi">Sobre mí</a></li>
         <li><a href="#experiencia">Experiencia</a></li>
         <li><a href="#certificaciones">Certificaciones</a></li>
+        <li><a href="#portafolio">Portafolio</a></li>
         <li><a href="#contacto" class="nav-cta">💬 Contactar</a></li>
     </ul>
 </nav>
@@ -1037,6 +1255,226 @@
     </div>
 </div>
 
+<!-- ── PORTAFOLIO ── -->
+<div id="portafolio">
+    <div class="section-wrapper">
+        <div class="section-label">Portafolio</div>
+        <h2>Proyectos <span class="gradient-text">destacados</span></h2>
+        <p class="section-desc">Soluciones geoespaciales y digitales desarrolladas para la gestión de emergencias, datos abiertos y servicios ciudadanos en Costa Rica. <em style="color:#64748b;font-size:0.85rem;">· Pasa el cursor sobre cada tarjeta para ver los detalles</em></p>
+
+        <div class="gallery-outer">
+            <div class="gallery-track" id="galleryTrack">
+
+
+                <!-- Card 1 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-1.png" alt="Sistema de Incidentes 911">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#ef4444;border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.15);">Web Map</span>
+                                <div class="flip-front-title">Sistema de Incidentes 911</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#ef4444,#f97316);"></div>
+                            <span class="flip-back-icon">🚨</span>
+                            <span class="flip-back-badge" style="color:#ef4444;border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);">Web Map · CNE</span>
+                            <h3>Sistema de Incidentes 911</h3>
+                            <p>Portal de datos abiertos con incidentes atendidos por el sistema 911. Permite consultar, filtrar y descargar información geoespacial de emergencias registradas a nivel nacional.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">ArcGIS Hub</span>
+                                <span class="flip-back-tag">Open Data</span>
+                                <span class="flip-back-tag">Emergencias</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#ef4444;" href="https://incidentes-911-cnecr.opendata.arcgis.com/" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-2.png" alt="Dashboard Daños y Pérdidas">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#00d4ff;border-color:rgba(0,212,255,0.4);background:rgba(0,212,255,0.15);">Dashboard</span>
+                                <div class="flip-front-title">Dashboard de Daños y Pérdidas</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#00d4ff,#06d6a0);"></div>
+                            <span class="flip-back-icon">📊</span>
+                            <span class="flip-back-badge" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.08);">Dashboard · CNE</span>
+                            <h3>Dashboard de Daños y Pérdidas</h3>
+                            <p>Panel interactivo que visualiza en tiempo real los daños materiales y pérdidas económicas durante eventos de emergencia en Costa Rica, con métricas clave y mapas integrados.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">ArcGIS Dashboard</span>
+                                <span class="flip-back-tag">Tiempo real</span>
+                                <span class="flip-back-tag">Análisis</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#00d4ff;" href="https://cnecr.maps.arcgis.com/apps/dashboards/618974dd00304c429b89f395b5386f59" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-3.png" alt="Bitácora Sala de Monitoreo">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#a855f7;border-color:rgba(168,85,247,0.4);background:rgba(168,85,247,0.15);">Sistema Web</span>
+                                <div class="flip-front-title">Bitácora — Sala de Monitoreo CNE</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#7c3aed,#a855f7);"></div>
+                            <span class="flip-back-icon">🖥️</span>
+                            <span class="flip-back-badge" style="color:#a855f7;border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.08);">Sistema Web · CNE</span>
+                            <h3>Bitácora — Sala de Monitoreo CNE</h3>
+                            <p>Aplicación web para el registro de turnos, eventos y actividades de la sala de monitoreo de la CNE. Desplegada en Azure con autenticación segura de usuarios.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">Azure</span>
+                                <span class="flip-back-tag">App Web</span>
+                                <span class="flip-back-tag">Monitoreo</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#a855f7;" href="https://mango-sky-00dac101e.7.azurestaticapps.net/login" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-4.png" alt="Albergues Temporales">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#06d6a0;border-color:rgba(6,214,160,0.4);background:rgba(6,214,160,0.15);">Web Map</span>
+                                <div class="flip-front-title">Albergues Temporales</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#06d6a0,#3b82f6);"></div>
+                            <span class="flip-back-icon">🏠</span>
+                            <span class="flip-back-badge" style="color:#06d6a0;border-color:rgba(6,214,160,0.3);background:rgba(6,214,160,0.08);">Web Map · CNE</span>
+                            <h3>Albergues Temporales</h3>
+                            <p>Portal geoespacial con ubicación, capacidad y estado de los albergues activados durante emergencias nacionales, facilitando la coordinación de ayuda humanitaria.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">ArcGIS Hub</span>
+                                <span class="flip-back-tag">Web Map</span>
+                                <span class="flip-back-tag">Emergencias</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#06d6a0;" href="https://albergues-temporales-cnecr.hub.arcgis.com/" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-5.png" alt="Sistemas de Agua Potable">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#3b82f6;border-color:rgba(59,130,246,0.4);background:rgba(59,130,246,0.15);">Open Data</span>
+                                <div class="flip-front-title">Sistemas de Acueductos y Agua Potable</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#3b82f6,#06d6a0);"></div>
+                            <span class="flip-back-icon">💧</span>
+                            <span class="flip-back-badge" style="color:#3b82f6;border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.08);">Open Data · CNE</span>
+                            <h3>Sistemas de Acueductos y Agua Potable</h3>
+                            <p>Portal de datos abiertos con información geoespacial de sistemas de abastecimiento de agua potable en Costa Rica. Facilita el acceso a datos de infraestructura hídrica nacional.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">ArcGIS Hub</span>
+                                <span class="flip-back-tag">Open Data</span>
+                                <span class="flip-back-tag">Infraestructura</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#3b82f6;" href="https://sistemas-agua-potable-cnecr.opendata.arcgis.com/" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-6.png" alt="Portal de Reclutamiento">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#f59e0b;border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.15);">Portal</span>
+                                <div class="flip-front-title">Portal de Reclutamiento CNE</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
+                            <span class="flip-back-icon">👥</span>
+                            <span class="flip-back-badge" style="color:#f59e0b;border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);">Portal · CNE</span>
+                            <h3>Portal de Reclutamiento CNE</h3>
+                            <p>Plataforma para el reclutamiento y gestión de voluntarios y personal de apoyo de la CNE durante emergencias. Centraliza inscripciones y perfiles de colaboradores.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">ArcGIS Hub</span>
+                                <span class="flip-back-tag">Portal Web</span>
+                                <span class="flip-back-tag">Voluntariado</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#f59e0b;" href="https://reclutamiento-cnecr.hub.arcgis.com/" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <img src="port-7.png" alt="Sitio de Peligro Inminente">
+                            <div class="flip-hint">↻</div>
+                            <div class="flip-front-overlay">
+                                <span class="flip-front-badge" style="color:#f97316;border-color:rgba(249,115,22,0.4);background:rgba(249,115,22,0.15);">Portal</span>
+                                <div class="flip-front-title">Sitio de Peligro Inminente</div>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div class="flip-back-accent" style="background:linear-gradient(90deg,#f97316,#ef4444);"></div>
+                            <span class="flip-back-icon">⚠️</span>
+                            <span class="flip-back-badge" style="color:#f97316;border-color:rgba(249,115,22,0.3);background:rgba(249,115,22,0.08);">Portal · CNE</span>
+                            <h3>Sitio de Peligro Inminente</h3>
+                            <p>Portal de información pública sobre zonas con peligro inminente identificadas por la CNE. Muestra alertas territoriales, datos geoespaciales de riesgo y recomendaciones para la población.</p>
+                            <div class="flip-back-tags">
+                                <span class="flip-back-tag">ArcGIS Hub</span>
+                                <span class="flip-back-tag">Alertas</span>
+                                <span class="flip-back-tag">Gestión de riesgo</span>
+                            </div>
+                            <a class="flip-back-link" style="color:#f97316;" href="https://riesgos-inminentes-cnecr.hub.arcgis.com/" target="_blank" rel="noopener">Abrir proyecto →</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /gallery-track -->
+        </div><!-- /gallery-outer -->
+
+        <div class="gallery-controls">
+            <button class="gallery-btn" id="galleryPrev" aria-label="Anterior">&#8592;</button>
+            <div class="gallery-dots">
+                <button class="gallery-dot active"></button>
+                <button class="gallery-dot"></button>
+                <button class="gallery-dot"></button>
+                <button class="gallery-dot"></button>
+                <button class="gallery-dot"></button>
+                <button class="gallery-dot"></button>
+                <button class="gallery-dot"></button>
+            </div>
+            <button class="gallery-btn" id="galleryNext" aria-label="Siguiente">&#8594;</button>
+        </div>
+
+    </div>
+</div>
+
 <!-- ── CONTACTO ── -->
 <div class="contact-section" id="contacto">
     <div class="contact-grid">
@@ -1212,6 +1650,88 @@
             }
         });
     }
+
+    /* ── Portfolio Gallery ── */
+    (function () {
+        const outer = document.querySelector('.gallery-outer');
+        const track = document.getElementById('galleryTrack');
+        if (!track) return;
+        const origCards = Array.from(track.querySelectorAll('.flip-card'));
+        const total = origCards.length;
+        const VISIBLE = 3;
+        origCards.slice(0, VISIBLE).forEach(card => {
+            track.appendChild(card.cloneNode(true));
+        });
+        let current = 0;
+        let timer = null;
+        let busy = false;
+        function getStep() {
+            const card = track.querySelector('.flip-card');
+            const gap = parseFloat(getComputedStyle(track).gap) || 16;
+            return card.getBoundingClientRect().width + gap;
+        }
+        function moveTo(idx, animated) {
+            if (animated === false) {
+                track.style.transition = 'none';
+            } else {
+                track.style.transition = 'transform 0.78s cubic-bezier(0.4,0,0.2,1)';
+            }
+            track.style.transform = 'translateX(-' + (idx * getStep()) + 'px)';
+        }
+        function updateDots(idx) {
+            document.querySelectorAll('.gallery-dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === idx % total);
+            });
+        }
+        function advance() {
+            if (busy) return;
+            busy = true;
+            current++;
+            moveTo(current);
+            updateDots(current);
+            setTimeout(function() {
+                busy = false;
+                if (current >= total) { current = 0; moveTo(0, false); updateDots(0); }
+            }, 800);
+        }
+        function retreat() {
+            if (busy) return;
+            busy = true;
+            if (current === 0) {
+                moveTo(total, false);
+                current = total;
+                setTimeout(function() {
+                    current--;
+                    moveTo(current);
+                    updateDots(current);
+                    setTimeout(function() { busy = false; }, 800);
+                }, 20);
+            } else {
+                current--;
+                moveTo(current);
+                updateDots(current);
+                setTimeout(function() { busy = false; }, 800);
+            }
+        }
+        const start = function() { timer = setInterval(advance, 5000); };
+        const stop  = function() { clearInterval(timer); };
+        document.getElementById('galleryNext')?.addEventListener('click', function() { stop(); advance(); start(); });
+        document.getElementById('galleryPrev')?.addEventListener('click', function() { stop(); retreat(); start(); });
+        document.querySelectorAll('.gallery-dot').forEach(function(d, i) {
+            d.addEventListener('click', function() {
+                if (busy) return;
+                stop(); current = i; moveTo(current); updateDots(current); start();
+            });
+        });
+        outer?.addEventListener('mouseenter', stop);
+        outer?.addEventListener('mouseleave', start);
+        var resizeT;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeT);
+            resizeT = setTimeout(function() { moveTo(current, false); }, 100);
+        });
+        start();
+    })();
 
     /* ── Parallax glow ── */
     document.addEventListener('mousemove', (e) => {
